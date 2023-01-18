@@ -1,0 +1,28 @@
+1. Create a screen where one can upload the Excel/CSV file containing orders.
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.upload-box{
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 20px auto;
+}
+</style>
+</head>
+<body>
+
+<div class="upload-box">
+  <form>
+    <h3>Upload Orders</h3>
+    <input type="file" name="orders" accept=".csv, .xls, .xlsx">
+    <br>
+    <br>
+    <input type="submit" value="Upload">
+  </form>
+</div>
+
+</body>
+</html>
