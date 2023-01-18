@@ -1,0 +1,47 @@
+Once we have parsed and processed the data, we can use JavaScript to display the output on the screen.
+ One way to do this is to use the Document Object Model (DOM) to create and append elements to the HTML page. 
+For example,
+
+
+var table = document.createElement("table");
+table.setAttribute("id", "output-table");
+var headerRow = table.insertRow(-1);
+
+// insert header cells
+var headers = Object.keys(data[0]);
+headers.forEach(function(header) {
+    var headerCell = headerRow.insertCell(-1);
+    headerCell.innerHTML = header;
+});
+
+// insert data rows
+data.forEach(function(row) {
+    var dataRow = table.insertRow(-1);
+    headers.forEach(function(header) {
+        var dataCell = dataRow.insertCell(-1);
+        dataCell.innerHTML = row[header];
+    });
+});
+
+// append the table to the page
+document.getElementById("output-div").appendChild(table);
+
+
+
+
+to allow the user to download the formatted Excel file, 
+we can use the XLSX.utils.book_new() method to create a new workbook,
+ XLSX.utils.json_to_sheet() method to convert the processed data into a worksheet,
+ and then use the XLSX.writeFile() method to download the workbook as a file.
+
+
+var workbook = XLSX.utils.book_new();
+var worksheet = XLSX.utils.json_to_sheet(data);
+XLSX.utils.book_append_sheet(workbook, worksheet);
+XLSX.writeFile(workbook, "formatted-data.xlsx");
+
+
+
+var blob = new Blob([new Uint8Array(XLSX.write(workbook, { bookType: 'xlsx', type: 'array' }))],
+ { type: "application/octet-stream" });
+saveAs(blob, "formatted-data.xlsx");
