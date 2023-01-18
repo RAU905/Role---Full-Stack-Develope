@@ -1,0 +1,33 @@
+to parse an Excel file and do data wrangling and processing in JavaScript,
+ we can use a library such as SheetJS or PapaParse.
+
+
+var reader = new FileReader();
+reader.onload = function(e) {
+    var data = e.target.result;
+    var workbook = XLSX.read(data, {type: 'binary'});
+    var first_sheet_name = workbook.SheetNames[0];
+    var worksheet = workbook.Sheets[first_sheet_name];
+    var data = XLSX.utils.sheet_to_json(worksheet, {raw: true});
+    console.log(data);
+    // Do data processing and wrangling here
+};
+reader.readAsBinaryString(file);
+
+
+This code reads the contents of the file as a binary string, then uses the SheetJS library to parse the data and
+ convert it into a JSON object. Once the data is in JSON format, 
+we can use standard JavaScript functions to process and wrangle the data as needed.
+
+
+we can also use PapaParse library for parsing CSV file, which is quite similar to SheetJS.
+
+
+Papa.parse(file, {
+    header: true,
+    dynamicTyping: true,
+    complete: function(results) {
+        console.log(results.data);
+        // Do data processing and wrangling here
+    }
+});
